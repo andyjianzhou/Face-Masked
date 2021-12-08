@@ -12,20 +12,23 @@ selection = st.sidebar.selectbox("Select a video source", ["Mask Detection", "Fr
 
 #Main webcam
 st.title(selection)
-st.title("Webcam Live Feed")
-run = st.checkbox('Run')
-FRAME_WINDOW = st.image([])
-camera = cv2.VideoCapture(0)
-while run:
-    print("Webcam is running")
-    ret, frame = camera.read()
-    if ret:
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        FRAME_WINDOW.image(frame)
+if selection == "Mask Detection":
+    st.title("Webcam Live Feed")
+    run = st.checkbox('Run')
+    FRAME_WINDOW = st.image([])
+    camera = cv2.VideoCapture(0)
+    while run:
+        print("Webcam is running")
+        ret, frame = camera.read()
+        if ret:
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            FRAME_WINDOW.image(frame)
+        else:
+            print("Error")
+            break
     else:
-        print("Error")
-        break
-else:
-    st.write('Stopped')
+        st.write('Stopped')
 
-print("Webcam released")
+    print("Webcam released")
+# elif selection == "Friend detection":
+    
