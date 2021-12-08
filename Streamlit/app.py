@@ -1,7 +1,5 @@
 import streamlit as st
 import cv2
-import FaceMaskDet
-import FriendDet
 # from streamlit_webrtc import webrtc_streamer #Figure out how to use this
 
 # webrtc_streamer(key="example")
@@ -14,6 +12,23 @@ selection = st.sidebar.selectbox("Select a video source", ["Mask Detection", "Fr
 ## Main webcam
 st.title(selection)
 if selection == "Mask Detection":
-    FaceMaskDet #Initialize the mask detection
+    st.title("Webcam Live Feed")
+    run = st.checkbox('Run')
+    FRAME_WINDOW = st.image([])
+    camera = cv2.VideoCapture(0)
+    while run:
+        print("Webcam is running")
+        ret, frame = camera.read()
+        if ret:
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            FRAME_WINDOW.image(frame)
+        else:
+            print("Error")
+            break
+    else:
+        st.write('Stopped')
+
+    print("Webcam released")
 elif selection == "Friend Detection":
-   FriendDet # Initialize the friend detection
+  st.title("Friend Detection") 
+  st.title("Webcam Live Feed") 
