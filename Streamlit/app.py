@@ -3,14 +3,13 @@ import cv2
 # from streamlit_webrtc import webrtc_streamer #Figure out how to use this
 
 # webrtc_streamer(key="example")
-
 ## Sidebar
-st.sidebar.title("Streamlit WebRTC")
+st.sidebar.title("Face unmasked")
 st.sidebar.info("This is a demo of a Streamlit WebRTC app")
 # st.sidebar.selectbox("Select a video source", ["Mask Detection", "Friend detection"])
-selection = st.sidebar.selectbox("Select a video source", ["Mask Detection", "Friend detection"])
+selection = st.sidebar.selectbox("Select a video source", ["Mask Detection", "Friend Detection"])
 
-#Main webcam
+## Main webcam
 st.title(selection)
 if selection == "Mask Detection":
     st.title("Webcam Live Feed")
@@ -30,5 +29,6 @@ if selection == "Mask Detection":
         st.write('Stopped')
 
     print("Webcam released")
-# elif selection == "Friend detection":
-    
+elif selection == "Friend Detection":
+  st.title("Friend Detection") 
+  st.title("Webcam Live Feed") 
