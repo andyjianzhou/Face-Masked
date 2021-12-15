@@ -3,7 +3,8 @@ import cv2
 import streamlit as st
 from multiapp import MultiApp
 from apps import FriendDet, FaceMaskDet # import your app modules here
-
+import torch
+from utils import FaceMaskDataset, get_predictions, get_model_instance_segmentation
 app = MultiApp()
 # from streamlit_webrtc import webrtc_streamer #Figure out how to use this
 
@@ -11,7 +12,7 @@ app = MultiApp()
 ## Sidebar
 st.sidebar.title("Face Masked")
 
-app.add_app("FaceMaskDet", FaceMaskDet.app)
-app.add_app("FriendDet", FriendDet.app)
+app.add_app("Face Mask Detection", FaceMaskDet.app)
+app.add_app("Friend Detection", FriendDet.app)
 # The main app
 app.run()
