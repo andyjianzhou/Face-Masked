@@ -32,7 +32,7 @@ class CFG:
   VAL_BS = 8
   TRAIN_BS = 4
   EPOCHS = 25
-  IMG_SIZE = 512
+  IMG_SIZE = 650
   NUM_WORKERS = 8
   SEED = 42069
   LR = 1e-4
@@ -64,11 +64,12 @@ def seed_torch(seed):
 # annotations_dir = '../input/face-mask-detection/annotations/'
 class FaceMaskDataset(torch.utils.data.Dataset):
 
-  def __init__(self, imgs, width, height, transforms=None):
+  def __init__(self, imgs, width, height, transforms=None, real_time = True):
       self.transforms = transforms
       self.imgs = imgs
       self.height = height
       self.width = width
+      self.real_time = real_time
       
       # sorting the images for consistency
       # To get images, the extension of the filename is checked to be jpg
@@ -83,9 +84,12 @@ class FaceMaskDataset(torch.utils.data.Dataset):
   def __getitem__(self, idx):
       # img_name = self.imgs[idx]
       # file_path = os.path.join(self.images_dir, img_name)
-      img = convert_from_image_to_cv2(self.imgs)
+      if self.real_time is False:
+         img = convert_from_image_to_cv2(self.imgs)
+         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32)
+      else:
+          img_rgb = cv2.cvtColor(self.imgs, cv2.COLOR_BGR2RGB).astype(np.float32)
       # img = cv2.imread(self.imgs)
-      img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32)
       img_res = cv2.resize(img_rgb, (self.width, self.height), cv2.INTER_AREA)
       img_res /= 255.0
 
@@ -137,9 +141,9 @@ model.load_state_dict(torch.load(PATH, map_location=device)['model_state_dict'])
 model.eval()
 model.to(device)
 print("Completed loading model")
-def get_predictions(image, threshold=0.5):
+def get_predictions(image, width, height, real_time = False):
   # PATH = 'C:/Users/YOLO/OneDrive/Desktop/github-test/Streamlit/apps/FasterRCNN_epoch_bestPrecision.pt'
-  imgs = FaceMaskDataset(image, CFG.IMG_SIZE, CFG.IMG_SIZE, transforms = get_transform(False))
+  imgs = FaceMaskDataset(image, width=width, height=height, transforms = get_transform(False), real_time = real_time)
   # print(imgs.shape)
   imgs = imgs[0]
   imgs = imgs.to(device)
@@ -167,23 +171,13 @@ def plot_img_bbox(img, target):
         ymin = ymin.detach().numpy()
         xmax = xmax.detach().numpy()
         ymax = ymax.detach().numpy()
-        draw.rectangle(((xmin, ymin), (xmax , ymax)), outline='red')
+        draw.rectangle(((xmin, ymin), (xmax , ymax)), outline='red', width = 2)
 
         draw.text((xmin-20, ymin-20), f"{label} : {score}%", font=ImageFont.truetype("arial.ttf", 15), fill = 'red')
-
-        print(f"{label} : {score}%")
-        # rect = patches.Rectangle((x, y),
-        #                          width, height,
-        #                          linewidth = 2,
-        #                          edgecolor = 'r',
-        #                          facecolor = 'none')
-        # Draw the bounding box on top of the image
-        
-        print("bounding box finished")
     return img
         # a.add_patch(rect)
 
-def apply_nms(orig_prediction, iou_thresh=0.3):
+def apply_nms(orig_prediction, iou_thresh):
     
     # torchvision returns the indices of the bboxes to keep
     keep = torchvision.ops.nms(orig_prediction['boxes'], orig_prediction['scores'], iou_thresh)

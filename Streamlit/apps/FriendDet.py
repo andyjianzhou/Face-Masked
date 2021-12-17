@@ -11,21 +11,21 @@ from utils import FaceMaskDataset, get_predictions, get_model_instance_segmentat
 # from utils import FaceMaskDataset, get_transform, get_model, get_device, get_dataloader
 def load_image(image_path):
     image = Image.open(image_path)
-    
-    return image
+    width, height = image.size
+    return image, width, height
 def app():
     st.title("Friend Detection") 
     image = st.file_uploader("Upload an image...", type=["jpg"])
     if image is not None:
         file_details = {"FileName":image.name,"FileType":image.type,"FileSize":image.size}
         st.write(file_details)
-    # dataset = FaceMaskDataset(image, 512, 512, transforms = None)
-    img = load_image(image)
-    img, preds = get_predictions(img)
+
+    img, width, height = load_image(image)
+    img, preds = get_predictions(img, width=width, height=height, real_time = False)
     print('predicted #boxes: ', len(preds['labels']))
     print('predicted #boxes: ', len(preds['boxes']))
     #apply nms
-    nms_preds = apply_nms(preds, 0.2)
+    nms_preds = apply_nms(preds, 0.7)
     # print('real #boxes: ', len(target['labels']))
     image_display = plot_img_bbox(torch_to_pil(img), nms_preds)
 

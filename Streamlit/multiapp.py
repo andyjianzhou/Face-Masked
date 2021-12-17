@@ -1,7 +1,7 @@
 """Frameworks for running multiple Streamlit applications as a single app.
 """
 import streamlit as st
-
+#Add in nav bar/ html
 class MultiApp:
     """Framework for combining multiple streamlit applications.
     Usage:
@@ -44,5 +44,6 @@ class MultiApp:
             'Navigation',
             self.apps,
             format_func=lambda app: app['title'])
-
+   
         app['function']()
+    
