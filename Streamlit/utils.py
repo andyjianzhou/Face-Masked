@@ -73,11 +73,6 @@ class FaceMaskDataset(torch.utils.data.Dataset):
       
       # sorting the images for consistency
       # To get images, the extension of the filename is checked to be jpg
-      # self.imgs = [image for image in sorted(os.listdir(images_dir))]
-      # self.annotate = [image for image in sorted(os.listdir(annotation_dir))]
-      
-      # classes: 0 index is reserved for background
-      # self.classes = CFG.LABELS
   def __len__(self):
     return len(self.imgs)
 
@@ -102,8 +97,6 @@ class FaceMaskDataset(torch.utils.data.Dataset):
       return img_res
 
 # transforms
-def convert_from_image_to_cv2(img: Image) -> np.ndarray:
-    return cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
     # return np.asarray(img)
 
 def get_transform(train):
@@ -146,10 +139,10 @@ def get_predictions(image, width, height, real_time = False):
   imgs = FaceMaskDataset(image, width=width, height=height, transforms = get_transform(False), real_time = real_time)
   # print(imgs.shape)
   imgs = imgs[0]
-  imgs = imgs.to(device)
+  imgs = imgs.to(device) #set model to cpu, as we are not using GPU to inference/predict
   # print(imgs.shape)
   output = model([imgs])
-  output = output[0]
+  output = output[0] 
 
   return imgs, output
 
@@ -157,25 +150,23 @@ def get_predictions(image, width, height, real_time = False):
 def plot_img_bbox(img, target):
     # plot the image and bboxes
     # Bounding boxes are defined as follows: x-min y-min x- max y-max
-    # a.imshow(img)
-
-    mask_dic = {1:'Without Mask', 2:'With Mask', 3:'Mask Weared Incorrect'}
+    mask_dic = {1:'Without Mask', 2:'With Mask', 3:'Mask Weared Incorrect'} #Labels
     
     draw = ImageDraw.Draw(img)
     for i, box in enumerate(target['boxes']):
         label = mask_dic[int(target['labels'][i].data)]
         score = int((target['scores'][i].data) * 100)
-
-        xmin, ymin, xmax, ymax  = box[0], box[1], box[2], box[3]
-        xmin = xmin.detach().numpy()
+        # Plotting bounding boxes require format   xmin,xin | ymax,ymax
+        xmin, ymin, xmax, ymax  = box[0], box[1], box[2], box[3] #Boxes are predictions from model
+        xmin = xmin.detach().numpy() #must detach these because we are using CPU, not GPU
         ymin = ymin.detach().numpy()
         xmax = xmax.detach().numpy()
         ymax = ymax.detach().numpy()
+        #draw boxes
         draw.rectangle(((xmin, ymin), (xmax , ymax)), outline='red', width = 2)
-
+        #Draw accuracy and confidence score 
         draw.text((xmin-20, ymin-20), f"{label} : {score}%", font=ImageFont.truetype("arial.ttf", 15), fill = 'red')
     return img
-        # a.add_patch(rect)
 
 def apply_nms(orig_prediction, iou_thresh):
     
@@ -193,6 +184,6 @@ def apply_nms(orig_prediction, iou_thresh):
 def torch_to_pil(img):
     print("Converting to PIL image")
     return transforms.ToPILImage()(img).convert('RGB')
-# pick one image from the test set
-# Final
+def convert_from_image_to_cv2(img: Image) -> np.ndarray:
+    return cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
 

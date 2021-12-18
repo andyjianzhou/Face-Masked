@@ -37,13 +37,8 @@ class MultiApp:
             "title": title,
             "function": func
         })
-
     def run(self):
-        # app = st.sidebar.radio(
-        app = st.sidebar.selectbox(
-            'Navigation',
-            self.apps,
-            format_func=lambda app: app['title'])
-   
-        app['function']()
-    
+        app = self.apps
+        for titles in app:
+            if st.sidebar.checkbox(titles['title']):
+                titles['function']()
