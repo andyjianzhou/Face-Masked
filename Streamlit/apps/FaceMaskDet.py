@@ -12,12 +12,25 @@ from os import path
 ## Use yolov5 model inspired from github https://github.com/taeokimeng/object-detection-yolo/blob/main/detection/object_detection.py 
 ## Increase fps, lowers performance but that's not the motive, higher fps
 
+
 def load_image(image_path):
     image = Image.open(image_path)
     width, height = image.size
     return image, width, height
 # Inputs into app folder, will create a better webapp
 def app():
+
+    st.markdown('''
+    <style>
+        .rectangle-bg{
+            height: 66.67vw;
+        }
+    ''', unsafe_allow_html=True)
+    rectangle_bg = '''
+        <div class = "rectangle-bg" style="background-color: #FFFFFF; padding: 10px;"> 
+        </div>  
+    ''' 
+    # st.markdown(rectangle_bg, unsafe_allow_html=True)
     
     st.title("Webcam Live Feed")
     run = st.checkbox('Detect')
@@ -34,6 +47,8 @@ def app():
     model = torch.hub.load('apps\yolov5', 'custom', path = '../yolov5/runs/train/exp3/weights/best.pt', source = 'local')
     print("Completed loading yolov5 model")
     model.eval()
+
+    t = st.empty()
     while run:
         print("Webcam is running")
         ret, frame = cap.read()
@@ -44,7 +59,6 @@ def app():
             
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             output = model(frame)
-            # output.pandas().xyxy[0]
             output.render()
 
             for img in output.imgs:
@@ -52,11 +66,18 @@ def app():
                 img_base64 = Image.fromarray(img)
                 img_base64.save(buffered, format="JPEG")
         
-
-        # print(f'prediction: {output.pandas().xyxy[0]}')
-            # st.image(img_base64)
             print(fps) #prints fps off
             FRAME_WINDOW.image(img_base64)
+            
+            array = output.pandas().xyxy[0]['class'].values
+            print(array)
+            if 2 in array:
+                t.text("Wear your mask!")
+            elif 0 in array:
+                t.text("Mask weared incorrectly!")
+
+            # if output.pandas().xyxy[0]['name'] == 'without_mask':
+                
         else:
             cap.release() #Stop the camera
             run = False 

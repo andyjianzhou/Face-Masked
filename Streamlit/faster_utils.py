@@ -8,11 +8,8 @@ from tqdm.autonotebook import tqdm
 import random
 import tkinter as tk
 from PIL import Image, ImageDraw, ImageFont
-# import matplotlib
-# matplotlib.use('TkAgg', force=True)
-# import matplotlib.pyplot as plt
-# import matplotlib.patches as patches
-# torch utils
+from win10toast import ToastNotifier
+# =============================================================================
 import torch
 import torchvision
 from torchvision import transforms, datasets, models
@@ -148,6 +145,7 @@ def get_predictions(image, width, height, real_time = False):
 
 # postprocessing
 def plot_img_bbox(img, target):
+
     # plot the image and bboxes
     # Bounding boxes are defined as follows: x-min y-min x- max y-max
     mask_dic = {1:'Without Mask', 2:'With Mask', 3:'Mask Weared Incorrect'} #Labels
@@ -166,7 +164,7 @@ def plot_img_bbox(img, target):
         draw.rectangle(((xmin, ymin), (xmax , ymax)), outline='red', width = 2)
         #Draw accuracy and confidence score 
         draw.text((xmin-20, ymin-20), f"{label} : {score}%", font=ImageFont.truetype("arial.ttf", 15), fill = 'red')
-    return img
+    return img, label
 
 def apply_nms(orig_prediction, iou_thresh):
     

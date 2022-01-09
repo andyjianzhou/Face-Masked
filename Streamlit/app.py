@@ -18,7 +18,7 @@ def navigation():
 page_bg_img = '''
 <style>
 .stApp {
-background-image: url("https://www.wallpaperflare.com/static/198/774/447/red-background-green-red-blue-wallpaper.jpg");
+background-image: url("https://cdn.dribbble.com/users/1139271/screenshots/3111447/3.gif");
 background-size: cover;
 }
 </style>
@@ -88,7 +88,7 @@ text_style = '''
 h1 {
     font-family: "Source Sans Pro", sans-serif;
     font-weight: 700;
-    color: rgb(56 55 55);
+    color: rgb(255 255 255);
     padding: 1.25rem 0px 1rem;
     margin: 0px;
     line-height: 1.4;
@@ -145,9 +145,8 @@ def main():
     st.sidebar.title("Face Masked") 
     if st.sidebar.button("About", key="about"):
         st.markdown(''' 
-        <div>
         <style>
-            .content h1{
+            h2{
                 animation-duration: 8s;
                 animation-name: slidein;
                 animation-iteration-count: infinite;
@@ -157,16 +156,11 @@ def main():
                     margin-left: 0%;
                 }
                 50% {
-                    margin-left: 150px;
+                    margin-left: 50px;
                 }
                 100% {
                     margin-left: 0%;
                 }
-            }
-            .content p{
-                font-size: 20px;
-                font-family: "Source Sans Pro", sans-serif;
-                color: rgb(56 55 55);
             }
             .content {
                 margin-left: -50%;
@@ -181,24 +175,125 @@ def main():
                 text-decoration: none;
                 color: #fff;
                 box-shadow: 3px 8px 22px rgba(94. 28, 68, 0.15);
-            s}
+            }
+            p{
+                margin-left:-50%;
+            }
+            
         </style>
+         ''', unsafe_allow_html=True)
+
+        st.markdown('''
+        <style>
+            .about-image {
+                margin-left:50%;
+                margin-top:-50%;
+            }
+            .about-image {
+                animation: fadeIn 5s;
+                -webkit-animation: fadeIn 5s;
+                -moz-animation: fadeIn 5s;
+                -o-animation: fadeIn 5s;
+                -ms-animation: fadeIn 5s;
+                }
+                @keyframes fadeIn {
+                0% {opacity:0;}
+                100% {opacity:1;}
+                }
+
+                @-moz-keyframes fadeIn {
+                0% {opacity:0;}
+                100% {opacity:1;}
+                }
+
+                @-webkit-keyframes fadeIn {
+                0% {opacity:0;}
+                100% {opacity:1;}
+                }
+
+                @-o-keyframes fadeIn {
+                0% {opacity:0;}
+                100% {opacity:1;}
+                }
+
+                @-ms-keyframes fadeIn {
+                0% {opacity:0;}
+                100% {opacity:1;}
+                }
          ''', unsafe_allow_html=True)
 
         about_content = '''
         <div class="content">
             <a href="" class="btn-unique">Using State-of-the-Art Object detection methods!</a>
-            <h1>Ever wondered if people <br> wore their <br> mask?</h1>
+            <h2>Ever wondered if people <br> wore their <br> mask?</h1>
+        </div>
+
+        <div class="details">
             <p>An app that detects the presence of a face mask.</p>
+            <img src="https://cdn.discordapp.com/attachments/741006860957778031/929858542188519554/about_image.png", width=750, height=750 class="about-image">
         </div>
         '''
         st.markdown(about_content, unsafe_allow_html=True)
 
         
-    if st.sidebar.button("Contact", key="contactt"):
+    if st.sidebar.button("Contact", key="contact"):
+        instagram_css = '''
+        <style>
+            .instagram-content{
+                margin-right:0;
+                margin-left: 30%;
+                margin-top: 0%;
+            }
+            .instagram-content {
+            animation: MoveUpDown 3s linear infinite;
+            position: relative;
+            }
+
+            @keyframes MoveUpDown {
+            0%, 100% {
+                bottom: 0;
+            }
+            50% {
+                bottom: 30px;
+            }
+        }
+        </style>
+        '''
+        st.markdown(instagram_css, unsafe_allow_html=True)
+
+        linkedin_css = '''
+        <style>
+            .linkedin-content{
+                margin-left: 30%;
+                margin-top: 40%;
+            }
+            .linkedin-content {
+            animation: MoveUpDown 3s linear infinite;
+            position: relative;
+            }
+
+            @keyframes MoveUpDown {
+            0%, 100% {
+                bottom: 0;
+            }
+            50% {
+                bottom: 30px;
+            }
+        }
+        </style>
+         '''
+        st.markdown(linkedin_css, unsafe_allow_html=True)
         contact_content = '''
-        <div class="contact-content"> 
-            <h1>Contact</h1>
+        <div id="divOne" class="instagram-content"> 
+            <a href="https://www.instagram.com/a_n_dy_z/">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png", width=100, height=100 class="instagram-image">
+            </a>
+        </div>
+
+        <div id="divTwo" class="linkedin-content">
+            <a href="https://www.linkedin.com/in/andy-zhou-3a1a47201/">
+                <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png", width=100, height=100 class="linkedin-image">
+            </a>
         </div>'''
         st.markdown(contact_content, unsafe_allow_html=True)
     
@@ -211,7 +306,7 @@ def main():
             <h1>How it works</h1>
             <p>On the sidebar, you can see the different options.</p>
             ''', unsafe_allow_html=True)
-
+    
 
 if __name__ == "__main__":
     main()
