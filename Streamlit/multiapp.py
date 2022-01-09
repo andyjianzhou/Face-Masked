@@ -40,5 +40,7 @@ class MultiApp:
     def run(self):
         app = self.apps
         for titles in app:
-            if st.sidebar.checkbox(titles['title']):
+            options = st.sidebar.checkbox(titles['title'])
+            if options:
+                st.experimental_set_query_params(option = titles['title'])
                 titles['function']()

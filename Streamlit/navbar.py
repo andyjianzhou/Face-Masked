@@ -1,6 +1,7 @@
 import streamlit as st
 
 def navbar():
+    
     st.markdown("""
     <style>
         body {

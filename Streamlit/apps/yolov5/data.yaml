@@ -1,0 +1,7 @@
+names:
+- mask_weared_incorrect
+- with_mask
+- without_mask
+nc: 3
+train: Face-Mask-Det-2/train/images
+val: Face-Mask-Det-2/valid/images
