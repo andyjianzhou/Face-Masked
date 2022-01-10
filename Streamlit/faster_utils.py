@@ -8,7 +8,6 @@ from tqdm.autonotebook import tqdm
 import random
 import tkinter as tk
 from PIL import Image, ImageDraw, ImageFont
-from win10toast import ToastNotifier
 # =============================================================================
 import torch
 import torchvision
@@ -17,6 +16,8 @@ import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
+
+
 # from apps import FasterRCNN_epoch_bestPrecision.pt, FasterRCNN_epoch_bestLoss.pt
 #Albumentation
 import albumentations as A
@@ -111,8 +112,7 @@ def get_transform(train):
                             ToTensorV2(p=1.0)
                         ],)
   ## model + reqs
-def get_model_instance_segmentation():
-    num_classes = 4
+def get_model_instance_segmentation(num_classes):
     # load an instance segmentation model pre-trained pre-trained on COCO
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
     # get number of input features for the classifier
@@ -124,31 +124,43 @@ def get_model_instance_segmentation():
 #predictions
 def collate_fn(batch):
     return tuple(zip(*batch))
-PATH = 'C:\\Users\\YOLO4\\OneDrive\\Documents\\Compsci_IA\\Compsci-IA\\FasterRCNN_epoch_bestPrecision.pt'
-model = get_model_instance_segmentation()
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-model.load_state_dict(torch.load(PATH, map_location=device)['model_state_dict'])
-model.eval()
-model.to(device)
-print("Completed loading model")
-def get_predictions(image, width, height, real_time = False):
-  # PATH = 'C:/Users/YOLO/OneDrive/Desktop/github-test/Streamlit/apps/FasterRCNN_epoch_bestPrecision.pt'
-  imgs = FaceMaskDataset(image, width=width, height=height, transforms = get_transform(False), real_time = real_time)
-  # print(imgs.shape)
-  imgs = imgs[0]
-  imgs = imgs.to(device) #set model to cpu, as we are not using GPU to inference/predict
-  # print(imgs.shape)
-  output = model([imgs])
-  output = output[0] 
 
-  return imgs, output
+
+print("Completed loading model")
+def get_predictions(image, width, height, PATH, real_time = False):
+    if PATH == 'UploaderDet':
+        PATH = 'C:\\Users\\YOLO4\\OneDrive\\Documents\\Compsci_IA\\Compsci-IA\\UploaderDet\\FasterRCNN_epoch_bestPrecision.pt'
+        num_classes = 4
+    elif PATH == 'FriendDet':
+        PATH = 'C:\\Users\\YOLO4\\OneDrive\\Documents\\Compsci_IA\\Compsci-IA\\FriendDet\\FasterRCNN_epoch_bestPrecision.pt'
+        num_classes = 5
+    
+    model = get_model_instance_segmentation(num_classes)
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model.load_state_dict(torch.load(PATH, map_location=device)['model_state_dict'])
+
+    model.eval()
+    model.to(device)
+    # PATH = 'C:/Users/YOLO/OneDrive/Desktop/github-test/Streamlit/apps/FasterRCNN_epoch_bestPrecision.pt'
+    imgs = FaceMaskDataset(image, width=width, height=height, transforms = get_transform(False), real_time = real_time)
+    # print(imgs.shape)
+    imgs = imgs[0]
+    imgs = imgs.to(device) #set model to cpu, as we are not using GPU to inference/predict
+    # print(imgs.shape)
+    output = model([imgs])
+    output = output[0] 
+
+    return imgs, output
 
 # postprocessing
-def plot_img_bbox(img, target):
+def plot_img_bbox(img, target, PATH):
 
     # plot the image and bboxes
     # Bounding boxes are defined as follows: x-min y-min x- max y-max
-    mask_dic = {1:'Without Mask', 2:'With Mask', 3:'Mask Weared Incorrect'} #Labels
+    if PATH == 'UploaderDet':
+        mask_dic = {1:'Without Mask', 2:'With Mask', 3:'Mask Weared Incorrect'} #Labels
+    elif PATH == 'FriendDet':
+        mask_dic = {1:'Jun Mask Off', 2:'Nic Mask On', 3:'Nic Mask Off', 4:'Jun Mask On'} #Labels
     
     draw = ImageDraw.Draw(img)
     for i, box in enumerate(target['boxes']):

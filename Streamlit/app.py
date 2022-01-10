@@ -2,7 +2,7 @@ import streamlit as st
 import cv2
 import streamlit as st
 from multiapp import MultiApp
-from apps import FaceMaskDet, UploadDet # import your app modules here
+from apps import FaceMaskDet, FriendDet # import your app modules here
 from faster_utils import FaceMaskDataset, get_predictions, get_model_instance_segmentation
 #streamlit
 import streamlit as st
@@ -52,7 +52,27 @@ button_style = '''
 }
 .css-1bvhuai:hover {
     border-color: rgb(247 247 247);
-    color: rgb(247 247 247);
+    color: #fff;
+    cursor: pointer;
+}
+<!-- Worry about button deco later -->
+.css-1bvhuai:before {
+    transtion: 0.5s all ease;
+    position: relative;
+    top: 0;
+    left: 50%;
+    right: 50%;
+    bottom:0;
+    opacity: 0;
+    contennt:"";
+    background-color: rgb(176, 43, 196);
+}
+.css-1bvhuai:hover:before {
+    transtion: 0.5s all ease;
+    left:0;
+    right:0;
+    opactiy: 1;
+    z-index: -1;
 }
 
 .css-1bvhuai:focus {
@@ -310,45 +330,10 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    # if navigation() is None:
-    #     st.markdown('''
-    #     <style>
-    #     .content p{
-    #         font-size: 20px;
-    #         font-family: "Source Sans Pro", sans-serif;
-    #         color: rgb(56 55 55);
-    #     }
-    #     .content {
-    #         margin-left: -50%;
-    #         margin-top: 10%;
-    #     }
-    #     .content .btn-unique{
-    #         display: inline-block;
-    #         background: linear-gradient(45deg, #87adfe, #b452fb);
-    #         border-radius: 6px;
-    #         paddding: 10px 20px;
-    #         box-sizing: border-box;
-    #         text-decoration: none;
-    #         color: #fff;
-    #         box-shadow: 3px 8px 22px rgba(94. 28, 68, 0.15);
-    #     }
-    #     </style>
-    #      ''', unsafe_allow_html=True)
-
-    #     about_content = '''
-    #     <div class="content">
-    #         <a href="/?p=usage" class="btn-unique">See how it works!</a>
-    #         <h1>Ever wondered if people <br> wore their <br> mask?</h1>
-    #         <p>An app that detects the presence of a face mask.</p>
-    #     </div>
-    #     '''
-    #     st.markdown(about_content, unsafe_allow_html=True)
         
     app = MultiApp()
     app.add_app("Face Mask Detection", FaceMaskDet.app)
-
-    # app.add_app("Friend Detection", FriendDet.app)
+    app.add_app("Friend Detection", FriendDet.app)
     # specify the primary menu definition
     #get the id of the menu item clicked
     # if(navigation() == 'About'):
