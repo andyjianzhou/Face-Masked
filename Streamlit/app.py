@@ -2,7 +2,7 @@ import streamlit as st
 import cv2
 import streamlit as st
 from multiapp import MultiApp
-from apps import FaceMaskDet, FriendDet # import your app modules here
+from apps import FaceMaskDet, FriendDet, test # import your app modules here
 from faster_utils import FaceMaskDataset, get_predictions, get_model_instance_segmentation
 #streamlit
 import streamlit as st
@@ -162,7 +162,7 @@ def main():
 
 
     ## Sidebar
-    st.sidebar.title("Face Masked") 
+    st.sidebar.image("https://pngimg.com/uploads/medical_mask/medical_mask_PNG48.png", use_column_width=True)
     if st.sidebar.button("About", key="about"):
         st.markdown(''' 
         <style>
@@ -334,6 +334,7 @@ if __name__ == "__main__":
     app = MultiApp()
     app.add_app("Face Mask Detection", FaceMaskDet.app)
     app.add_app("Friend Detection", FriendDet.app)
+    # app.add_app("Test", test.app)
     # specify the primary menu definition
     #get the id of the menu item clicked
     # if(navigation() == 'About'):

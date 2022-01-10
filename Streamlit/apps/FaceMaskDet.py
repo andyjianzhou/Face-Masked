@@ -47,7 +47,7 @@ def app():
     model = torch.hub.load('apps\yolov5', 'custom', path = '../yolov5/runs/train/exp3/weights/best.pt', source = 'local')
     print("Completed loading yolov5 model")
     model.eval()
-
+    
     t = st.empty()
     while run:
         print("Webcam is running")
@@ -75,6 +75,8 @@ def app():
                 t.text("Wear your mask!")
             elif 0 in array:
                 t.text("Mask weared incorrectly!")
+            else:
+                t.text("You're a good human being")
 
             # if output.pandas().xyxy[0]['name'] == 'without_mask':
                 

@@ -18,7 +18,6 @@ def load_image(image_path):
     width, height = image.size
     return image, width, height
 def app():
-    path_version()
     st.title("Upload an Image") 
     image = st.file_uploader("Upload an image...", type=["jpg"], key="Uploaderdet")
     if image:

@@ -34,6 +34,29 @@ def load_image(image_path):
     return image, width, height
 def app():
     #Bulk select option
+    st.markdown('''
+    <style>
+        .st-cq {
+        border-bottom-color: rgb(186 75 255);
+        }
+        .st-cp {
+        border-top-color: rgb(219 75 255);
+        }
+        .st-co {
+        border-right-color: rgb(194 75 255);
+        }
+        .st-cn {
+        border-left-color: rgb(202 75 255);
+        }
+        .st-ei {
+        background-color: rgb(172 99 245);
+        
+        }
+        .css-e3kofv:hover, .css-e3kofv:active, .css-e3kofv:focus {
+        background: rgb(201 163 235);
+        }
+    </style>
+    ''', unsafe_allow_html=True)
     zipObj = ZipFile('test.zip', 'w')
 
     st.title("Upload an Image") 
@@ -94,6 +117,7 @@ def app():
                 if st.download_button("Download images of friends!", data=fp, file_name="test.zip", mime="application/zip"):
                     st.session_state.key = str(randint(1000, 100000000))
                     st.sync()
+                    
             
             
                 
