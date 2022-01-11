@@ -80,7 +80,7 @@ def app():
                 for i in image:
                     #load image using PIL
                     img, width, height = load_image(i)
-                    #get predictions from faster_utils
+                    #get predictions from faster_utils      
                     img, preds = get_predictions(img, width=width, height=height, PATH=PATH, real_time = False) 
                     print('predicted #boxes: ', preds['labels']) #debugging purposes
                     print('predicted #boxes: ', len(preds['boxes']))
