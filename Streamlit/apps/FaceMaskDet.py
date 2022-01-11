@@ -43,9 +43,12 @@ def app():
     #yolov5 prediction test
     
     # real time yolov5
+    #load the model
     model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=False, classes=3, device = 'cpu')
+    #obtain the yolov5 weights
     model = torch.hub.load('apps\yolov5', 'custom', path = '../yolov5/runs/train/exp3/weights/best.pt', source = 'local')
     print("Completed loading yolov5 model")
+    #set model to eval mode
     model.eval()
     
     t = st.empty()

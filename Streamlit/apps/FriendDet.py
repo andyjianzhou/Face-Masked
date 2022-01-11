@@ -52,7 +52,7 @@ def app():
         .st-ei {
         background-color: rgb(172 99 245);
         
-        }
+        }   
         .css-e3kofv:hover, .css-e3kofv:active, .css-e3kofv:focus {
         background: rgb(201 163 235);
         }
@@ -122,8 +122,3 @@ def app():
                 if st.download_button("Download images of friends!", data=fp, file_name="test.zip", mime="application/zip"):
                     st.session_state.key = str(randint(1000, 100000000))
                     st.sync()
-                    
-            
-            
-                
-

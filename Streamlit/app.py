@@ -338,6 +338,6 @@ if __name__ == "__main__":
     app = MultiApp()
     #Add app pages onto "MultiApp()" => Creates session states
     app.add_app("Face Mask Detection", FaceMaskDet.app)
-    app.add_app("Friend Detection", FriendDet.app)
+    app.add_app("Friend Detection", FriendDet.app)  
     
     app.run()   
