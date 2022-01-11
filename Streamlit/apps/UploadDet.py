@@ -24,13 +24,13 @@ def app():
         if image is not None:
             # file_details = {"FileName":image.name,"FileType":image.type,"FileSize":image.size}
             # st.write(file_details)
-
+            #Loading in image
             img, width, height = load_image(image)
-
+            #Using function from faster_utils to get predictions
             img, preds = get_predictions(img, width=width, height=height, PATH=PATH, real_time = False) 
             print('predicted #boxes: ', preds['labels']) #debugging purposes
             print('predicted #boxes: ', len(preds['boxes']))
-            #apply nms
+            #apply nms(Non Max Suppression) to get rid of overlapping boxes
             nms_preds = apply_nms(preds, 0.7)
             # print('real #boxes: ', len(target['labels']))
             image_display, label = plot_img_bbox(torch_to_pil(img), nms_preds, PATH)

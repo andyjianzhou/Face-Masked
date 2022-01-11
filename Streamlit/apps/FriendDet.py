@@ -19,21 +19,22 @@ if 'key' not in st.session_state:
 
 toast = ToastNotifier()
 # from utils import FaceMaskDataset, get_transform, get_model, get_device, get_dataloader
-
+# Sets model path
 PATH = 'FriendDet'
 
+#Save files function
 def save_uploadedfile(uploadedfile):
     with open(os.path.join("fileDir",uploadedfile.name),"wb") as f:
         f.write((uploadedfile).getbuffer())
     return st.success("Saved File:{} to fileDir".format(uploadedfile.name))
 
-
+#Loading image function using PIL 
 def load_image(image_path):
     image = Image.open(image_path)
     width, height = image.size
     return image, width, height
 def app():
-    #Bulk select option
+    #Bulk select option/decorations
     st.markdown('''
     <style>
         .st-cq {
@@ -60,37 +61,41 @@ def app():
     zipObj = ZipFile('test.zip', 'w')
 
     st.title("Upload an Image") 
+    #Using streamlit inbuilt function to Bulk select option and upload image
     options = st.multiselect("Choose which person to download", ["Jun", "Nic"])
     if not options:
         st.error("Please select a person to download")
     else:
         st.write(f"You selected option {options}")
-
+        #File uploader provided by streamlit
         image = st.file_uploader("Upload an image...", type=["jpg", "png"], key="frienddet", accept_multiple_files=True)
         print(image)
         if image:
             if image is not None:
+                #create a file so that we can save the image, later retrieve with zip file
                 try:
                     os.mkdir("fileDir")
                 except FileExistsError:
                     print('Directory not created')
                 for i in image:
-
+                    #load image using PIL
                     img, width, height = load_image(i)
+                    #get predictions from faster_utils
                     img, preds = get_predictions(img, width=width, height=height, PATH=PATH, real_time = False) 
                     print('predicted #boxes: ', preds['labels']) #debugging purposes
                     print('predicted #boxes: ', len(preds['boxes']))
                     
                     print(options)
+                    #apply nms(Non Max Suppression) to get rid of overlapping boxes
                     nms_preds = apply_nms(preds, 0.7)
                     image_display, label = plot_img_bbox(torch_to_pil(img), nms_preds, PATH)
                     print(label)
                     if options == ["Jun"]:
-                        #apply nms
+                        
                         if label == "Jun Mask On" or label == "Jun Mask Off":
                             st.image(image_display, 50)
                             save_uploadedfile(i)
-                            #if equals to name
+                            #if equals to name, write into zip file
                             zipObj.write(f'fileDir/{i.name}')
                             print("Saved!")
 
@@ -120,10 +125,5 @@ def app():
                     
             
             
-                
-                # if label == 'Without Mask':
-                #     toast.show_toast("Face Masked Alert","Please wear your mask!",duration=20,icon_path="Face-Mask.ico")
-                # elif  label == 'Mask Weared Incorrect':
-                #     toast.show_toast("Face Masked Alert","Wear your mask properly!",duration=20,icon_path="Face-Mask.ico")
                 
 

@@ -8,6 +8,7 @@ from faster_utils import FaceMaskDataset, get_predictions, get_model_instance_se
 import streamlit as st
 # from navbar import navbar
 
+#This is to find url code
 def navigation():
         try:
             path = st.experimental_get_query_params()['p'][0]
@@ -15,6 +16,8 @@ def navigation():
             # st.error('Please use the main app.')
             return None
         return path
+
+# This is to decorate streamlit page using custom html and css
 page_bg_img = '''
 <style>
 .stApp {
@@ -329,21 +332,12 @@ def main():
     
 
 if __name__ == "__main__":
+    #Run new html page
     main()
-        
+    # Run the applets
     app = MultiApp()
+    #Add app pages onto "MultiApp()" => Creates session states
     app.add_app("Face Mask Detection", FaceMaskDet.app)
     app.add_app("Friend Detection", FriendDet.app)
-    # app.add_app("Test", test.app)
-    # specify the primary menu definition
-    #get the id of the menu item clicked
-    # if(navigation() == 'About'):
-    #     # use htmle
-    #     # st.markdown("""""")
-    #     st.write("This is About Page")  
-    # if(navigation() == 'YouTube'):  
-    #     st.write("Youtube Page")    
-    # if(navigation() == 'Demos'):
-    #     st.write("Demos Page")
-    # The main app
+    
     app.run()   
