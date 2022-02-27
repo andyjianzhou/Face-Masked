@@ -98,6 +98,9 @@ def app():
                             #if equals to name, write into zip file
                             zipObj.write(f'fileDir/{i.name}')
                             print("Saved!")
+                        else:
+                            personFound = False
+                            st.error("Person not found")
 
                     elif options == ["Nic"]:
                         if label == "Nic Mask On" or label == "Nic Mask Off":
@@ -107,18 +110,23 @@ def app():
                             #if equals to name
                             zipObj.write(f'fileDir/{i.name}')
                             print("Saved!")
+                        else:
+                            personFound = False
+                            st.error("Person not found")
 
                     elif options == ["Nic", "Jun"] or ["Jun, Nic"]:
-                        if label == "Nic Mask On" and label == "Nic Mask Off" and label == "Jun Mask On" and label == "Jun Mask Off":
+                        if label == "Nic Mask On" or label == "Nic Mask Off" or label == "Jun Mask On" or label == "Jun Mask Off":
                             st.image(image_display, width=50)
                             save_uploadedfile(i)
                             #if equals to name
                             zipObj.write(f'fileDir/{i.name}')
                             print("Saved!")
+                        
 
                 
             zipObj.close()
             with open("test.zip", "rb") as fp:
-                if st.download_button("Download images of friends!", data=fp, file_name="test.zip", mime="application/zip"):
-                    st.session_state.key = str(randint(1000, 100000000))
-                    st.sync()
+                if( not zipObj.namelist() == []):
+                    if st.download_button("Download images of friends!", data=fp, file_name="test.zip", mime="application/zip"):
+                        st.session_state.key = str(randint(1000, 100000000))
+                        st.sync()
