@@ -1,5 +1,6 @@
 import streamlit as st
 import cv2
+import time
 import streamlit as st
 from multiapp import MultiApp
 from apps import FaceMaskDet, FriendDet, test # import your app modules here
@@ -9,6 +10,8 @@ import streamlit as st
 # from navbar import navbar
 
 #This is to find url code
+
+
 def navigation():
         try:
             path = st.experimental_get_query_params()['p'][0]
@@ -18,6 +21,16 @@ def navigation():
         return path
 
 # This is to decorate streamlit page using custom html and css
+intro_bg = '''
+<style>
+    .stApp {
+        background-image: url("https://media4.giphy.com/media/4vkoiAZeIa38zx6Kt1/giphy.gif?cid=790b7611e2561fbc09e82d7127240cd5fa4c8c42fc41aebf&rid=giphy.gif&ct=g");
+        background-size: cover;
+    }
+</style>
+'''
+st.markdown(intro_bg, unsafe_allow_html=True)
+time.sleep(2)
 page_bg_img = '''
 <style>
     .stApp {
