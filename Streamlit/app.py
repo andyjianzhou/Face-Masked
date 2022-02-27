@@ -7,11 +7,12 @@ from apps import FaceMaskDet, FriendDet, test # import your app modules here
 from faster_utils import FaceMaskDataset, get_predictions, get_model_instance_segmentation
 #streamlit
 import streamlit as st
+import os.path
+from os import path
 # from navbar import navbar
 
 #This is to find url code
-
-
+import streamlit.components.v1 as components
 def navigation():
         try:
             path = st.experimental_get_query_params()['p'][0]
@@ -21,6 +22,11 @@ def navigation():
         return path
 
 # This is to decorate streamlit page using custom html and css
+# print("File exists:" + str(path.exists("intro.htm")))
+HtmlFile = open("intro.htm", 'r', encoding='utf-8')
+source_code = HtmlFile.read() 
+print(source_code)
+components.html(source_code)
 intro_bg = '''
 <style>
     .stApp {
@@ -29,8 +35,7 @@ intro_bg = '''
     }
 </style>
 '''
-st.markdown(intro_bg, unsafe_allow_html=True)
-time.sleep(2)
+# time.sleep(2)
 page_bg_img = '''
 <style>
     .stApp {

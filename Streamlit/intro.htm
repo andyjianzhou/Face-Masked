@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <style>
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 80px;
+}
+
+header h4{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    line-height: 80px;
+}
+.intro {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #161616;
+    transition: 1s;
+}
+
+.logo-header{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+}
+
+.logo {
+    position: relative;
+    display: inline-block;
+    bottom: -20px;
+    opacity: 0;
+}
+
+.logo.active {
+    bottom: 0;
+    opacity: 1;
+    transition: ease-in-out 0.5s;
+}
+
+.logo.fade {
+    bottom: 150px;
+    opacity: 0;
+    transition: ease-in-out 0.5s;
+}
+    </style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Face Masked</title>
+    </head>
+<body>
+    <div class="intro">
+        <h1 class="logo-header">
+            <span class="logo">Face</span><span class="logo">Masked.</span>
+        </h1>
+    </div>
+    <header>
+        <h4>FaceMasked.</h4>
+    </header>
+<script>
+        let intro = document.querySelector('.intro');
+        let logo = document.querySelector('.logo-header');
+        let logoSpan = document.querySelectorAll('.logo');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                logoSpan.forEach((span, idx) => {
+                    setTimeout(() => {
+                        span.classList.add('active');
+                    }, (idx + 1) * 400)
+                });
+                setTimeout(() => {
+                    logoSpan.foreach((span,idx) => {
+                        setTimeout(() => {
+                            span.classList.remove('active');
+                            span.classList.add('fade');
+                        }, (idx + 1) * 50)
+                    })
+                }, 2000)
+                setTimeout(() => {
+                	intro.style.top = '-100vh'; 
+                }, 2300)
+            })
+        })    
+    </script>
+    
+    
+</body>
+</html>
+
