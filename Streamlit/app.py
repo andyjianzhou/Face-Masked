@@ -300,6 +300,28 @@ def main():
         st.write("If you are wearing a mask, the box will be pink. If you are not wearing a mask, the box will be orange. If you are wearing your mask incorrectly, the box will be red.")
         st.write("It will also alert the user if they are wearing a mask or not.")
 
+        st.subheader("Face Mask Uploader:")
+        st.write("This uses a more accurate model, the FasterRCNN FPN model, to detect the presence of a face mask. The model is trained on the COCO dataset, which is a large dataset of images of people and their masks. It uses the Region Proposal network which is a CNN algorithm, that's widely used in the RCNN family of models for object detection.")
+        st.image(
+            "https://cdn.discordapp.com/attachments/700087629323960351/947652044980891699/unknown.png",
+            width=600, # Manually Adjust the width of the image as per requirement
+        )
+        st.write("Look! It has 99% accuracy on ANY photo!")
+        st.image(
+            "https://cdn.discordapp.com/attachments/700087629323960351/947655450797686834/unknown.png",
+            width=800, # Manually Adjust the width of the image as per requirement
+        )
+        st.write("I used advanced algorithms in my model in order to accomplish this feat, mosiac augmentation, windowing on the image, a custom loss function using adam optimizer, and a a new SOTA metric(weighted area under the curve) for bounding box accuracy.")
+        st.write("Realize how there is also a notification alert to alert the user that someone isn't wearing their mask!")
+
+        st.subheader("Friend detection checkbox:")
+
+        st.write("You can decide to add a friend's face on the app and upload images to train the model. The model will detect your desired person that you would like to keep, and download them in a neat temprorary file.")
+    
+        st.image(
+            "https://cdn.discordapp.com/attachments/700087629323960351/947656334352998420/unknown.png",
+            width=600, # Manually Adjust the width of the image as per requirement
+        )
     if navigation() == "usage":
         st.markdown('''
         <div class="usage">
