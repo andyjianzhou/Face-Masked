@@ -34,7 +34,6 @@ def app():
     
     st.title("Webcam Live Feed")
     run = st.checkbox('Detect')
-
     FRAME_WINDOW = st.image([])
     cap = cv2.VideoCapture(0) #enable webcam
     #fps usage, calculate e fps

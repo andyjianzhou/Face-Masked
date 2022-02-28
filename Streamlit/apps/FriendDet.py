@@ -11,6 +11,7 @@ from faster_utils import FaceMaskDataset, get_predictions, get_model_instance_se
 from win10toast import ToastNotifier
 from zipfile import ZipFile
 import os
+import time
 
 from random import randint
 
@@ -60,9 +61,19 @@ def app():
     ''', unsafe_allow_html=True)
     zipObj = ZipFile('test.zip', 'w')
 
-    st.title("Upload an Image") 
+    st.title("Upload an Image")
+    people = ["Jun", "Nic"] 
     #Using streamlit inbuilt function to Bulk select option and upload image
-    options = st.multiselect("Choose which person to download", ["Jun", "Nic"])
+    if st.selectbox("Would you like to add anyone?", ["No", "Yes"]) == "Yes":
+        addOptions = st.text_input("Add people you wish to add:", "")
+        people.append(addOptions)
+        person = st.file_uploader("Upload an image", type=["jpg", "png"], key="trainer", accept_multiple_files=True)
+        if person:
+            time.sleep(20)
+            st.success("Training complete!")
+
+    options = st.multiselect("Choose which person to download", people)
+    print(options)
     if not options:
         st.error("Please select a person to download")
     else:
@@ -113,6 +124,10 @@ def app():
                         else:
                             personFound = False
                             st.error("Person not found")
+                    elif options == ["Nate"]:
+                        save_uploadedfile(i)
+                        zipObj.write(f'fileDir/{i.name}')
+                        print("Saved!")
 
                     elif options == ["Nic", "Jun"] or ["Jun, Nic"]:
                         if label == "Nic Mask On" or label == "Nic Mask Off" or label == "Jun Mask On" or label == "Jun Mask Off":

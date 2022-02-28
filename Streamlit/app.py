@@ -278,7 +278,27 @@ def main():
         st.markdown(about_content, unsafe_allow_html=True)
     
     if st.sidebar.button("Help", key="help"):
-        st.write("Help")
+        st.title("How to use the website:")
+
+        st.header("Nav Bar:")
+        st.write("Here, you can navigate through the website using this interactive navbar.")
+        st.image(
+            "https://cdn.discordapp.com/attachments/700087629323960351/947640390654263376/unknown.png",
+            width=600, # Manually Adjust the width of the image as per requirement
+        )
+        st.header("Face Mask detection checkbox:")
+        st.image(
+            "https://cdn.discordapp.com/attachments/700087629323960351/947638906201972827/unknown.png",
+            width=600, # Manually Adjust the width of the image as per requirement
+        )
+        st.write("Here, you can use the app to detect the presence of a face mask. Pressing the detect button will send a live feed like so:")
+        st.image(
+            "https://cdn.discordapp.com/attachments/700087629323960351/947639982682685490/unknown.png",
+            width=600, # Manually Adjust the width of the image as per requirement
+        )
+        st.write("If you see a face with a mask, the app will detect it and show a box around it. Depending on whether you are wearing a mask or not, the box colour will change, so will the labels.")
+        st.write("If you are wearing a mask, the box will be pink. If you are not wearing a mask, the box will be orange. If you are wearing your mask incorrectly, the box will be red.")
+        st.write("It will also alert the user if they are wearing a mask or not.")
 
     if navigation() == "usage":
         st.markdown('''
