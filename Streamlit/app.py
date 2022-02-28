@@ -292,7 +292,7 @@ def main():
         st.write("It will also alert the user if they are wearing a mask or not.")
 
         st.subheader("Face Mask Uploader:")
-        st.write("This uses a more accurate model, the FasterRCNN FPN model, to detect the presence of a face mask. The model is trained on the COCO dataset, which is a large dataset of images of people and their masks. It uses the Region Proposal network which is a CNN algorithm, that's widely used in the RCNN family of models for object detection.")
+        st.write("This uses a more accurate model, the FasterRCNN RPN model, to detect the presence of a face mask. The model is trained on the COCO dataset, which is a large dataset of images of people and their masks. It uses the Region Proposal network which is a CNN algorithm, that's widely used in the RCNN family of models for object detection.")
         st.image(
             "https://cdn.discordapp.com/attachments/700087629323960351/947652044980891699/unknown.png",
             width=600, # Manually Adjust the width of the image as per requirement
