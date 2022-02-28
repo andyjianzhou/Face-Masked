@@ -27,19 +27,10 @@ HtmlFile = open("intro.htm", 'r', encoding='utf-8')
 source_code = HtmlFile.read() 
 print(source_code)
 components.html(source_code)
-intro_bg = '''
-<style>
-    .stApp {
-        background-image: url("https://media4.giphy.com/media/4vkoiAZeIa38zx6Kt1/giphy.gif?cid=790b7611e2561fbc09e82d7127240cd5fa4c8c42fc41aebf&rid=giphy.gif&ct=g");
-        background-size: cover;
-    }
-</style>
-'''
-# time.sleep(2)
 page_bg_img = '''
 <style>
     .stApp {
-        background-image: url("https://cdn.dribbble.com/users/1139271/screenshots/3111447/3.gif");
+        background-image: url("https://cdn.dribbble.com/users/2272349/screenshots/7207200/ocean-guardian-pulse-loop-by-the-sound-of-breaking-glass.gif");
         background-size: cover;
     }
 </style>
