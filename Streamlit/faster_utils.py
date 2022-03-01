@@ -6,7 +6,6 @@ import os
 import random
 from tqdm.autonotebook import tqdm
 import random
-import tkinter as tk
 from PIL import Image, ImageDraw, ImageFont
 # =============================================================================
 import torch
