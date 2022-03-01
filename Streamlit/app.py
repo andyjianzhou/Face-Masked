@@ -20,8 +20,8 @@ def navigation():
         return path
 
 # This is to decorate streamlit page using custom html and css
-# print("File exists:" + str(path.exists("intro.htm")))
-HtmlFile = open("intro.htm", 'r', encoding='utf-8')
+print("File exists:" + str(path.exists("github-test/Streamlit/intro.htm")))
+HtmlFile = open("github-test/Streamlit/intro.htm", 'r', encoding='utf-8')
 # HtmlFile = open("C://Users//YOLO4//onedrive//desktop//github-test//Streamlit//intro.htm", 'r', encoding='utf-8')
 source_code = HtmlFile.read() 
 print(source_code)
