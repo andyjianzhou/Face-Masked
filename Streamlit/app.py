@@ -1,14 +1,10 @@
 import streamlit as st
-import cv2
-import time
 import streamlit as st
 from multiapp import MultiApp
-from apps import FaceMaskDet, FriendDet, test # import your app modules here
+from apps import FaceMaskDet, FriendDet # import your app modules here
 from faster_utils import FaceMaskDataset, get_predictions, get_model_instance_segmentation
 #streamlit
 import streamlit as st
-import os.path
-from os import path
 # from navbar import navbar
 
 #This is to find url code
