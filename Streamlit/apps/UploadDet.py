@@ -2,12 +2,11 @@ import streamlit as st
 from PIL import Image
 #Opencv and torch utils
 from faster_utils import FaceMaskDataset, get_predictions, get_model_instance_segmentation, torch_to_pil, plot_img_bbox, apply_nms
-# from win10toast import ToastNotifier
-# toast = ToastNotifier()
+from win10toast import ToastNotifier
+toast = ToastNotifier()
 # from utils import FaceMaskDataset, get_transform, get_model, get_device, get_dataloader
 PATH = 'UploaderDet'
 
-t = st.empty()
 def load_image(image_path):
     image = Image.open(image_path)
     width, height = image.size
@@ -32,8 +31,6 @@ def app():
             st.image(image_display)
 
             if label == 'Without Mask':
-                # toast.show_toast("Face Masked Alert","Please wear your mask!",duration=5,icon_path="Face-Mask.ico")
-                t.text("Please wear your mask!")
+                toast.show_toast("Face Masked Alert","Please wear your mask!",duration=5,icon_path="Face-Mask.ico")
             elif  label == 'Mask Weared Incorrect':
-                # toast.show_toast("Face Masked Alert","Wear your mask properly!",duration=5,icon_path="Face-Mask.ico")
-                t.text("Wear your mask properly!")
+                toast.show_toast("Face Masked Alert","Wear your mask properly!",duration=5,icon_path="Face-Mask.ico")
