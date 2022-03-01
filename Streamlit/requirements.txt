@@ -1,8 +1,6 @@
 # pip install -r requirements.txt
 
 # Base ----------------------------------------
-python==2.7
-win10toast
 matplotlib
 numpy
 opencv-python-headless
