@@ -1,13 +1,9 @@
 import streamlit as st
 from PIL import Image
-
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 #Opencv and torch utils
 import cv2
 import torch
 from faster_utils import FaceMaskDataset, get_predictions, get_model_instance_segmentation, torch_to_pil, plot_img_bbox, apply_nms
-from win10toast import ToastNotifier
 from zipfile import ZipFile
 import os
 import time
@@ -16,8 +12,6 @@ from random import randint
 
 if 'key' not in st.session_state:
     st.session_state.key = str(randint(1000, 100000000))
-
-toast = ToastNotifier()
 # from utils import FaceMaskDataset, get_transform, get_model, get_device, get_dataloader
 # Sets model path
 PATH = 'FriendDet'
