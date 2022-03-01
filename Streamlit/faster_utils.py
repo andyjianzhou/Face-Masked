@@ -85,9 +85,6 @@ class FaceMaskDataset(torch.utils.data.Dataset):
       # img = cv2.imread(self.imgs)
       img_res = cv2.resize(img_rgb, (self.width, self.height), cv2.INTER_AREA)
       img_res /= 255.0
-
-      # img_res = img_res.transpose(2, 0, 1)
-      # print("before transforms:", img_res.shape)
       if self.transforms:
           transforms = self.transforms(image = img_res) 
           img_res = transforms['image']
@@ -143,10 +140,8 @@ def get_predictions(image, width, height, PATH, real_time = False):
     model.to(device)
     # PATH = 'C:/Users/YOLO/OneDrive/Desktop/github-test/Streamlit/apps/FasterRCNN_epoch_bestPrecision.pt'
     imgs = FaceMaskDataset(image, width=width, height=height, transforms = get_transform(False), real_time = real_time)
-    # print(imgs.shape)
     imgs = imgs[0]
     imgs = imgs.to(device) #set model to cpu, as we are not using GPU to inference/predict
-    # print(imgs.shape)
     output = model([imgs])
     output = output[0] 
 

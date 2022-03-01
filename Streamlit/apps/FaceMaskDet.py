@@ -62,7 +62,7 @@ def app():
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             output = model(frame)
             output.render()
-
+    
             for img in output.imgs:
                 buffered = BytesIO()
                 img_base64 = Image.fromarray(img)
