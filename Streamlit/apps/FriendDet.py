@@ -1,7 +1,6 @@
 import streamlit as st
 from PIL import Image
-import matplotlib
-matplotlib.use('TkAgg', force=True)
+
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 #Opencv and torch utils
