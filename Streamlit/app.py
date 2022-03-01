@@ -4,6 +4,8 @@ from multiapp import MultiApp
 from apps import FaceMaskDet, FriendDet # import your app modules here
 from faster_utils import FaceMaskDataset, get_predictions, get_model_instance_segmentation
 #streamlit
+import os
+from os import path
 import streamlit as st
 # from navbar import navbar
 
@@ -19,8 +21,8 @@ def navigation():
 
 # This is to decorate streamlit page using custom html and css
 # print("File exists:" + str(path.exists("intro.htm")))
-# HtmlFile = open("intro.htm", 'r', encoding='utf-8')
-HtmlFile = open("C://Users//YOLO4//onedrive//desktop//github-test//Streamlit//intro.htm", 'r', encoding='utf-8')
+HtmlFile = open("intro.htm", 'r', encoding='utf-8')
+# HtmlFile = open("C://Users//YOLO4//onedrive//desktop//github-test//Streamlit//intro.htm", 'r', encoding='utf-8')
 source_code = HtmlFile.read() 
 print(source_code)
 components.html(source_code)
